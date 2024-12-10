@@ -1,0 +1,4 @@
+{
+    "model": "antony66/whisper-large-v3-russian",
+    "task": "automatic-speech-recognition"
+}
