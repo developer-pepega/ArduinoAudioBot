@@ -13,10 +13,11 @@ def index():
 
 from pydantic import BaseModel
 class ModelResponse(BaseModel):
-    pred_command: str
+    command: int
+    option: int
 
 from fastapi import UploadFile
 @app.get("/predict")
 def predict_sentiment(file: UploadFile):
     pred = model(file)
-    return ModelResponse(pred_command=pred.command,)
+    return ModelResponse(command=pred.command, option=pred.option)

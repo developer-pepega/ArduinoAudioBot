@@ -7,10 +7,9 @@ with open(config_path, "r") as file:
 from dataclasses import dataclass
 @dataclass
 class ModelPrediction:
-    command: str
+    command: int
     option: int
-    score: float
-
+    
 from transformers import pipeline
 from fastapi import UploadFile
 from pydub import AudioSegment
@@ -19,7 +18,9 @@ def load_model():
     def model(data: UploadFile) -> ModelPrediction:
         audio = load_audio_data(data)
         pred = model_pl(audio)
-        return ModelPrediction(command=pred['text'])
+        from .translator import translator_text_to_cmd
+        cmd, degree = translator_text_to_cmd(pred['text'])
+        return ModelPrediction(command=cmd, option=degree)
     return model
 
 import numpy as np
